@@ -76,11 +76,7 @@ hist(
 )
 ```
 
-<<<<<<< HEAD
-![plot of chunk totalStepsDay](figure/totalStepsDay-1.png)
-=======
 ![](PA1_files/figure-html/totalStepsDay-1.png)<!-- -->
->>>>>>> 3f0faf5cfd48de23cc359cbd4ac8851b815b561f
 
 ```r
 mean.tsd <- mean(data.tsd$steps)
@@ -109,11 +105,7 @@ plot(data.dap$interval, data.dap$mean,
      col = "#79CDCD")
 ```
 
-<<<<<<< HEAD
-![plot of chunk dailyActiviyPatern](figure/dailyActiviyPatern-1.png)
-=======
 ![](PA1_files/figure-html/dailyActiviyPatern-1.png)<!-- -->
->>>>>>> 3f0faf5cfd48de23cc359cbd4ac8851b815b561f
 
 ```r
 max.dap <- data.dap[which.max(data.dap$mean),]$interval
@@ -152,24 +144,15 @@ hist(
 )
 ```
 
-<<<<<<< HEAD
-![plot of chunk missingValues2](figure/missingValues2-1.png)
-=======
 ![](PA1_files/figure-html/missingValues2-1.png)<!-- -->
->>>>>>> 3f0faf5cfd48de23cc359cbd4ac8851b815b561f
 
 ```r
 meanClean.tsd <- mean(dataClean.tsd$steps)
 medianClean.tsd <- median(dataClean.tsd$steps)
 ```
 
-<<<<<<< HEAD
-As a result, the average number of steps taken per day is 1.0766189 &times; 10<sup>4</sup>.\
-Similarly, the median is equal to 1.0766189 &times; 10<sup>4</sup>
-=======
 As a result, the average number of steps taken per day is 1.0766189\times 10^{4}.\
 Similarly, the median is equal to 1.0766189\times 10^{4}
->>>>>>> 3f0faf5cfd48de23cc359cbd4ac8851b815b561f
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
@@ -200,10 +183,6 @@ ggplot(data.wd,
   facet_wrap(~dateType, ncol = 1, nrow = 2)
 ```
 
-<<<<<<< HEAD
-![plot of chunk weekdayType](figure/weekdayType-1.png)
-=======
 ![](PA1_files/figure-html/weekdayType-1.png)<!-- -->
->>>>>>> 3f0faf5cfd48de23cc359cbd4ac8851b815b561f
 
 As shown in the graph above, there are some differences in activity between weekdays and weekends. Most surprisingly, weekends appear to be more active. It might be due to long hours of desk-job during weekdays.
