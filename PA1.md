@@ -1,7 +1,7 @@
 ---
 title: "Activity monitoring report"
 author: "Oscar Ramirez Granada"
-date: "`r Sys.Date()`"
+date: "2023-08-24"
 output: 
   html_document:
     keep_md: yes
@@ -32,8 +32,8 @@ The dataset is stored in a comma-separated-value (CSV) file and there are a tota
 
 ## Loading and preprocessing the data
 
-```{r readData}
 
+```r
 unzip("activity.zip")
 data <- read.csv("activity.csv", header = T, sep = ",")
 
@@ -42,13 +42,23 @@ data$date <- as.Date(data$date,"%Y-%m-%d")
 data$weekday <- weekdays(data$date)
 
 summary(data)
+```
 
+```
+##      steps             date               interval        weekday         
+##  Min.   :  0.00   Min.   :2012-10-01   Min.   :   0.0   Length:17568      
+##  1st Qu.:  0.00   1st Qu.:2012-10-16   1st Qu.: 588.8   Class :character  
+##  Median :  0.00   Median :2012-10-31   Median :1177.5   Mode  :character  
+##  Mean   : 37.38   Mean   :2012-10-31   Mean   :1177.5                     
+##  3rd Qu.: 12.00   3rd Qu.:2012-11-15   3rd Qu.:1766.2                     
+##  Max.   :806.00   Max.   :2012-11-30   Max.   :2355.0                     
+##  NA's   :2304
 ```
 
 ## What is mean total number of steps taken per day?
 
-```{r totalStepsDay, fig.width= 6}
 
+```r
 data.tsd <- aggregate(data$steps, 
                       by = list(data$date), 
                       FUN = sum, 
@@ -64,18 +74,22 @@ hist(
   ylim = c(0,20),
   breaks = seq(0,25000, by = 2500)
 )
-
-mean.tsd <- mean(data.tsd$steps)
-median.tsd <- median(data.tsd$steps)
-
 ```
 
-On average, the number of steps taken per day is `r mean.tsd`.\
-Similarly, the median is equal to `r median.tsd`
+![plot of chunk totalStepsDay](figure/totalStepsDay-1.png)
+
+```r
+mean.tsd <- mean(data.tsd$steps)
+median.tsd <- median(data.tsd$steps)
+```
+
+On average, the number of steps taken per day is 9354.2295082.\
+Similarly, the median is equal to 10395
 
 ## What is the average daily activity pattern?
 
-```{r dailyActiviyPatern, fig.width= 6}
+
+```r
 data.dap <- aggregate(data$steps, 
                       by = list(data$interval),
                       FUN = mean,
@@ -89,23 +103,27 @@ plot(data.dap$interval, data.dap$mean,
      ylab = "Average number of steps",
      main = "Average number of steps per interval",
      col = "#79CDCD")
-
-max.dap <- data.dap[which.max(data.dap$mean),]$interval
-
 ```
 
-On average across all the days in the dataset, the interval `r max.dap` contains the maximum number of steps.
+![plot of chunk dailyActiviyPatern](figure/dailyActiviyPatern-1.png)
+
+```r
+max.dap <- data.dap[which.max(data.dap$mean),]$interval
+```
+
+On average across all the days in the dataset, the interval 835 contains the maximum number of steps.
 
 ## Imputing missing values
 
-```{r missingValues1}
+
+```r
 totalNA <- sum(is.na(data$steps))
 ```
 
-There are `r totalNA` missing values in the data set. However, a method for filling in these missing values has been devised. The mean for the day is to be considered for this purpose.
+There are 2304 missing values in the data set. However, a method for filling in these missing values has been devised. The mean for the day is to be considered for this purpose.
 
-```{r missingValues2, fig.width = 6}
 
+```r
 clean.steps <- data.dap$mean[match(data$interval,data.dap$interval)]
 
 data$stepsClean <- ifelse(is.na(data$steps), yes = clean.steps, no = data$steps)
@@ -124,19 +142,22 @@ hist(
   ylim = c(0,30),
   breaks = seq(0,25000, by = 2500)
 )
-
-meanClean.tsd <- mean(dataClean.tsd$steps)
-medianClean.tsd <- median(dataClean.tsd$steps)
-
 ```
 
-As a result, the average number of steps taken per day is `r meanClean.tsd`.\
-Similarly, the median is equal to `r medianClean.tsd`
+![plot of chunk missingValues2](figure/missingValues2-1.png)
+
+```r
+meanClean.tsd <- mean(dataClean.tsd$steps)
+medianClean.tsd <- median(dataClean.tsd$steps)
+```
+
+As a result, the average number of steps taken per day is 1.0766189 &times; 10<sup>4</sup>.\
+Similarly, the median is equal to 1.0766189 &times; 10<sup>4</sup>
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-```{r weekdayType, fig.width = 6}
 
+```r
 library(ggplot2)
 
 data$wdtype <- ifelse(
@@ -160,7 +181,8 @@ ggplot(data.wd,
         x = "Interval",
         y = "Average number of steps") +
   facet_wrap(~dateType, ncol = 1, nrow = 2)
-
 ```
+
+![plot of chunk weekdayType](figure/weekdayType-1.png)
 
 As shown in the graph above, there are some differences in activity between weekdays and weekends. Most surprisingly, weekends appear to be more active. It might be due to long hours of desk-job during weekdays.
